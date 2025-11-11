@@ -23,9 +23,13 @@ def check_cache(cached_value, location):
         return decoded_value
     else:
         weather = fetch_weather_data(location, api_key)
-        weather_json = json.dumps(weather)
-        r.set(location, weather_json, ex=600) #Remember to set this back to 12 hours after testing complete
-        print("new location found")
-        return weather
+        print(f"check for null: {weather}")
+        if weather:
+            weather_json = json.dumps(weather)
+            r.set(location, weather_json, ex=600) #Remember to set this back to 12 hours after testing complete
+            print("new location found")
+            return weather
+        else:
+            return("valid location not found")
     
 
