@@ -1,6 +1,6 @@
 import requests
 
-def fetch_weather_data(location, api_key): #TODO: Check to make sure location is a valid location and return 400 Bad Requests for an incorrect location
+def fetch_weather_data(location, api_key):
     try:
         base_url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"
 
@@ -10,7 +10,7 @@ def fetch_weather_data(location, api_key): #TODO: Check to make sure location is
 
         response = requests.get(request_url)
         print(response.status_code)
-        if response.status_code == 200:
+        if response.status_code == 200: #TODO: Look more into if api data beingly slightly different matters or if im thinking too hard about this
             data = response.json()
             return data
     except requests.exceptions.Timeout as errt:
