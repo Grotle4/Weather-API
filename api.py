@@ -15,8 +15,7 @@ redis_port = os.getenv("REDIS_PORT")
 redis_name = os.getenv("REDIS_HOST")
 print(redis_port)
 
-r = redis.StrictRedis(host=redis_name, port=redis_port, db=0, decode_responses=True) #Remember to start redis manually before running, wont work otherwise
-#TODO: Look into unit testing as well
+r = redis.StrictRedis(host=redis_name, port=redis_port, db=0, decode_responses=True)
 
 
 def ping_test(r):
@@ -57,15 +56,12 @@ def handle_data():
     if request.method == 'GET':
         if check_rate(r):
             location = request.args.get('location')
-            print(location)
             cached_value = r.get(location)
             decoded_value = check_cache(cached_value, location)
             return jsonify(decoded_value)
         else:
             print("Too many requests")
             return jsonify("Too many requests, try again in a few seconds")
-    if request.method == "POST": #TODO: Get the post request to send back data from the Weather API to send processed weather data back.
-        return jsonify({"message": "this is a post test"})
     
 
 if __name__ == '__main__':

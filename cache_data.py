@@ -18,18 +18,17 @@ def check_cache(cached_value, location):
     cached_value = r.get(location)
 
     if cached_value:
-        print(f"recieved from cache") #TODO: Clean up print statements and look into proper logging
+        print(f"Recieved from cache")
         decoded_value = json.loads(cached_value)
         return decoded_value
     else:
         weather = fetch_weather_data(location, api_key)
-        print(f"check for null: {weather}")
         if weather:
             weather_json = json.dumps(weather)
             r.set(location, weather_json, ex=600) #Remember to set this back to 12 hours after testing complete
-            print("new location found")
+            print("New location found")
             return weather
         else:
-            return("valid location not found")
+            return("Valid location not found")
     
 

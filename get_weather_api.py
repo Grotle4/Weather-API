@@ -4,13 +4,13 @@ def fetch_weather_data(location, api_key):
     try:
         base_url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"
 
-        request_url = f"{base_url}{location}?unitGroup=us&key={api_key}&contentType=json" #add back location later
+        request_url = f"{base_url}{location}?unitGroup=us&key={api_key}&contentType=json"
         
         print(request_url)
 
         response = requests.get(request_url)
         print(response.status_code)
-        if response.status_code == 200: #TODO: Look more into if api data beingly slightly different matters or if im thinking too hard about this
+        if response.status_code == 200:
             data = response.json()
             return data
     except requests.exceptions.Timeout as errt:
@@ -25,7 +25,7 @@ def fetch_weather_data(location, api_key):
 def weather_test(location, api_key):
         base_url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"
 
-        request_url = f"{base_url}{location}?unitGroup=us&key={api_key}&contentType=json" #add back location later
+        request_url = f"{base_url}{location}?unitGroup=us&key={api_key}&contentType=json"
         
         print(request_url)
 

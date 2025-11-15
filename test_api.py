@@ -13,14 +13,3 @@ if __name__ == '__main__':
     unittest.main()
 
 
-
-"""
-Unit Tests to be implemented:
-validate location
-weather api url is valid
-cache is storing keys properly
-cache will return none properly on expired cache
-cache returns a cache result on a cache hit
-check to see if weather api is called on cache miss
-check for external error apis to be handled correctly
-"""
