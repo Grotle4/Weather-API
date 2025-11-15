@@ -21,10 +21,10 @@ r = redis.StrictRedis(host=redis_name, port=redis_port, db=0, decode_responses=T
 def ping_test(r):
     try:
         r.ping()
-        print("connected")
+        print("Connected")
         return True
     except redis.exceptions.ConnectionError as e:
-        print(f"could not connect: {e}")
+        print(f"Could not connect: {e}")
         return False
 
 ping_test(r)
