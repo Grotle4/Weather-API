@@ -21,3 +21,17 @@ def fetch_weather_data(location, api_key):
         print(f"A HTTP Error occurred: {errh}")
     except requests.exceptions.RequestException as err:
         print(f"An Unknown Error occurred: {err}")
+
+def weather_test(location, api_key):
+        base_url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"
+
+        request_url = f"{base_url}{location}?unitGroup=us&key={api_key}&contentType=json" #add back location later
+        
+        print(request_url)
+
+        response = requests.get(request_url)
+
+        if response.status_code == 401:
+             return False
+        else:
+             return True

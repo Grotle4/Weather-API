@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 import os
 import redis
 from cache_data import check_cache
-
+import unittest
+from get_weather_api import weather_test
 
 app = Flask(__name__)
 
@@ -17,12 +18,15 @@ print(redis_port)
 r = redis.StrictRedis(host=redis_name, port=redis_port, db=0, decode_responses=True) #Remember to start redis manually before running, wont work otherwise
 #TODO: Look into unit testing as well
 
+
 def ping_test(r):
     try:
         r.ping()
         print("connected")
+        return True
     except redis.exceptions.ConnectionError as e:
         print(f"could not connect: {e}")
+        return False
 
 ping_test(r)
 
@@ -44,6 +48,8 @@ def check_rate(r):
         return False
     else:
         return True
+    
+
 
 
 @app.route('/weather', methods=['GET', 'POST'])
