@@ -5,7 +5,6 @@ import redis
 from cache_data import check_cache
 
 
-
 app = Flask(__name__)
 
 load_dotenv()
@@ -27,15 +26,38 @@ def ping_test(r):
 
 ping_test(r)
 
+def check_rate(r):
+    request_limit = 10
+    time_period = 10
+
+    pipe = r.pipeline()
+    pipe.incr("default")
+    pipe.expire("default" ,time_period)
+    try:
+        count, _ = pipe.execute()
+    except redis.exceptions.ConnectionError as e:
+        print(f"Connection Error")
+        return True
+
+    if count > request_limit:
+        print("Connection Allowed")
+        return False
+    else:
+        return True
+
 
 @app.route('/weather', methods=['GET', 'POST'])
-def handle_data(): #TODO: Add a limit to how many times a user can make a request in quick succession to keep traffic managable
+def handle_data():
     if request.method == 'GET':
-        location = request.args.get('location')
-        print(location)
-        cached_value = r.get(location)
-        decoded_value = check_cache(cached_value, location)
-        return jsonify(decoded_value)
+        if check_rate(r):
+            location = request.args.get('location')
+            print(location)
+            cached_value = r.get(location)
+            decoded_value = check_cache(cached_value, location)
+            return jsonify(decoded_value)
+        else:
+            print("Too many requests")
+            return jsonify("Too many requests, try again in a few seconds")
     if request.method == "POST": #TODO: Get the post request to send back data from the Weather API to send processed weather data back.
         return jsonify({"message": "this is a post test"})
     
