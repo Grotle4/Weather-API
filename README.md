@@ -84,3 +84,6 @@ The repository includes basic unit tests to verify the Redis connection and the 
 To run the tests, execute the `test_api.py` script:
 ```bash
 python test_api.py
+```
+## Inspiration
+https://roadmap.sh/projects/weather-api-wrapper-service
